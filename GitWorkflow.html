@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 گردش کار تیمی با Git</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* هدر */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: rgba(245, 197, 66, 0.1);
+            border: 2px solid #f5c542;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(245, 197, 66, 0.2);
+        }
+
+        .header h1 {
+            font-size: 42px;
+            color: #f5c542;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #ccc;
+            font-size: 18px;
+        }
+
+        /* بخش */
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(245, 197, 66, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #f5c542;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(245, 197, 66, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* تیم */
+        .team {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            min-width: 150px;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            border-color: #f5c542;
+        }
+
+        .team-member .avatar {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .team-member .name {
+            font-weight: bold;
+            color: #f5c542;
+            font-size: 16px;
+        }
+
+        .team-member .role {
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        /* مراحل */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .step {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border-right: 4px solid #f5c542;
+            transition: all 0.3s;
+            align-items: flex-start;
+        }
+
+        .step:hover {
+            background: rgba(245, 197, 66, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #f5c542, #e5b32e);
+            color: #1a1a2e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(245, 197, 66, 0.4);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
+            color: #f5c542;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .step-content p {
+            color: #ddd;
+            margin-bottom: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        .badge-lead {
+            background: rgba(245, 197, 66, 0.2);
+            color: #f5c542;
+            border: 1px solid #f5c542;
+        }
+
+        .badge-dev {
+            background: rgba(66, 165, 245, 0.2);
+            color: #42a5f5;
+            border: 1px solid #42a5f5;
+        }
+
+        .badge-all {
+            background: rgba(102, 187, 106, 0.2);
+            color: #66bb6a;
+            border: 1px solid #66bb6a;
+        }
+
+        /* کد */
+        .code {
+            background: #0f0f1e;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 3px solid #f5c542;
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #66d9ef;
+            font-size: 14px;
+            direction: ltr;
+            text-align: left;
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+
+        /* جدول */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: rgba(245, 197, 66, 0.15);
+            color: #f5c542;
+            padding: 15px;
+            text-align: right;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #ddd;
+            font-size: 14px;
+        }
+
+        tr:hover td {
+            background: rgba(245, 197, 66, 0.05);
+        }
+
+        /* Conflict */
+        .conflict-box {
+            background: rgba(255, 82, 82, 0.1);
+            border: 2px dashed #ff5252;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .conflict-box h4 {
+            color: #ff5252;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        /* نکته */
+        .tip-box {
+            background: rgba(102, 187, 106, 0.1);
+            border-right: 4px solid #66bb6a;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            color: #ddd;
+        }
+
+        .tip-box strong {
+            color: #66bb6a;
+        }
+
+        /* فلش جریان */
+        .flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+
+        .flow-item {
+            padding: 10px 18px;
+            background: rgba(245, 197, 66, 0.15);
+            border: 1px solid #f5c542;
+            border-radius: 25px;
+            color: #f5c542;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .flow-arrow {
+            color: #f5c542;
+            font-size: 20px;
+        }
+
+        /* پرینت */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            .section {
+                border: 1px solid #ccc;
+                background: white;
+            }
+            .header {
+                background: #f5f5f5;
+            }
+        }
+
+        /* موبایل */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 26px;
+            }
+            .step {
+                flex-direction: column;
+            }
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            .team {
+                gap: 15px;
+            }
+            .team-member {
+                min-width: 120px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- هدر -->
+        <div class="header">
+            <h1>🚀 گردش کار تیمی با Git & GitHub</h1>
+            <p>از ساخت مخزن تا Merge نهایی — کامل و ساده</p>
+        </div>
+
+        <!-- تیم -->
+        <div class="section">
+            <h2 class="section-title">👥 تیم نمونه</h2>
+            <div class="team">
+                <div class="team-member">
+                    <div class="avatar">👑</div>
+                    <div class="name">علی</div>
+                    <div class="role">Lead Developer</div>
+                </div>
+                <div class="team-member">
+                    <div class="avatar">👨‍💻</div>
+                    <div class="name">رضا</div>
+                    <div class="role">Developer</div>
+                </div>
+                <div class="team-member">
+                    <div class="avatar">👩‍💻</div>
+                    <div class="name">سارا</div>
+                    <div class="role">Developer</div>
+                </div>
+            </div>
+
+            <!-- جریان کلی -->
+            <div class="flow">
+                <span class="flow-item">۱. ساخت مخزن</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-item">۲. Clone</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-item">۳. Branch</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-item">۴. Commit + Push</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-item">۵. Pull Request</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-item">۶. Merge</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-item">۷. Pull</span>
+            </div>
+        </div>
+
+        <!-- مراحل -->
+        <div class="section">
+            <h2 class="section-title">📋 مراحل به ترتیب</h2>
+            <div class="steps">
+
+                <!-- مرحله ۱ -->
+                <div class="step">
+                    <div class="step-number">۱</div>
+                    <div class="step-content">
+                        <h3>ساخت مخزن <span class="badge badge-lead">👑 Lead</span></h3>
+                        <p>Lead یه مخزن جدید توی گیت‌هاب می‌سازه و <strong>Collaborators</strong> رو اضافه می‌کنه.</p>
+                        <p><strong>📍 کجا:</strong> GitHub.com → New Repository → Settings → Collaborators</p>
+                        <div class="code">git init</div>
+                    </div>
+                </div>
+
+                <!-- مرحله ۲ -->
+                <div class="step">
+                    <div class="step-number">۲</div>
+                    <div class="step-content">
+                        <h3>Clone <span class="badge badge-dev">👨‍💻 Developers</span></h3>
+                        <p>اعضای تیم پروژه رو روی کامپیوتر خودشون کپی می‌کنن.</p>
+                        <p><strong>📍 کجا:</strong> GitHub Desktop → File → Clone Repository</p>
+                        <div class="code">git clone https://github.com/USERNAME/REPO.git</div>
+                        <div class="tip-box">
+                            <strong>⚠️ نکته:</strong> Clone <strong>فقط یه بار</strong> در ابتدا انجام می‌شه. بعد از اون از Pull استفاده کن.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مرحله ۳ -->
+                <div class="step">
+                    <div class="step-number">۳</div>
+                    <div class="step-content">
+                        <h3>ساخت Branch <span class="badge badge-all">👥 همه</span></h3>
+                        <p>هر نفر یه شاخه جدید برای فیچر خودش می‌سازه تا <code style="color:#f5c542">main</code> خراب نشه.</p>
+                        <p><strong>📍 کجا:</strong> GitHub Desktop → Current Branch → New Branch</p>
+                        <div class="code">git checkout -b feature-login</div>
+                    </div>
+                </div>
+
+                <!-- مرحله ۴ -->
+                <div class="step">
+                    <div class="step-number">۴</div>
+                    <div class="step-content">
+                        <h3>Commit + Push <span class="badge badge-all">👥 همه</span></h3>
+                        <p>تغییرات رو ذخیره و به گیت‌هاب می‌فرستن.</p>
+                        <p><strong>📍 کجا:</strong> GitHub Desktop → Commit → Push</p>
+                        <div class="code">
+git add .<br>
+git commit -m "feat: add login page"<br>
+git push -u origin feature-login
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مرحله ۵ -->
+                <div class="step">
+                    <div class="step-number">۵</div>
+                    <div class="step-content">
+                        <h3>Pull Request <span class="badge badge-all">👥 همه</span></h3>
+                        <p>درخواست ادغام شاخه‌شون با <code style="color:#f5c542">main</code> رو می‌فرستن.</p>
+                        <p><strong>📍 کجا:</strong> GitHub.com → مخزن → Compare & pull request</p>
+                    </div>
+                </div>
+
+                <!-- مرحله ۶ -->
+                <div class="step">
+                    <div class="step-number">۶</div>
+                    <div class="step-content">
+                        <h3>Merge <span class="badge badge-lead">👑 Lead</span></h3>
+                        <p>Lead کدها رو بررسی می‌کنه و PR رو Merge می‌کنه.</p>
+                        <p><strong>📍 کجا:</strong> GitHub.com → PR → Merge pull request</p>
+                    </div>
+                </div>
+
+                <!-- مرحله ۷ -->
+                <div class="step">
+                    <div class="step-number">۷</div>
+                    <div class="step-content">
+                        <h3>Pull <span class="badge badge-all">👥 همه</span></h3>
+                        <p>همه آخرین تغییرات <code style="color:#f5c542">main</code> رو می‌گیرن تا برای فیچر بعدی آماده باشن.</p>
+                        <p><strong>📍 کجا:</strong> GitHub Desktop → Current Branch → main → Pull origin</p>
+                        <div class="code">
+git checkout main<br>
+git pull origin main
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- جدول کی چی کار می‌کنه -->
+        <div class="section">
+            <h2 class="section-title">📊 کی چی کار می‌کنه؟</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>مرحله</th>
+                        <th>👑 علی (Lead)</th>
+                        <th>👨‍💻 رضا</th>
+                        <th>👩‍💻 سارا</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>۱. ساخت مخزن</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>۱. افزودن Collaborators</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>۲. Clone</td>
+                        <td>اختیاری</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>۳. Branch</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>۴. Commit + Push</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>۵. Pull Request</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>۶. Merge</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>۷. Pull</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Conflict -->
+        <div class="section">
+            <h2 class="section-title">💥 Conflict چیه؟</h2>
+            <p style="color:#ddd; margin-bottom:15px;">
+                وقتی دو نفر یه خط از یه فایل رو متفاوت تغییر بدن، Git نمی‌دونه کدوم رو انتخاب کنه!
+            </p>
+
+            <div class="conflict-box">
+                <h4>⚠️ علامت‌های Conflict توی فایل:</h4>
+                <div class="code" style="color: #ff8a80; direction: ltr; text-align: left;">
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD<br>
+background: blue;     ← کد فعلی main<br>
+=======<br>
+background: red;      ← کد تو<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature-products
+                </div>
+            </div>
+
+            <div class="tip-box" style="margin-top:20px;">
+                <strong>✅ راه‌حل:</strong>
+                <ol style="margin-top:10px; padding-right:20px;">
+                    <li>فایل رو باز کن</li>
+                    <li>تصمیم بگیر کدوم کد رو نگه داری</li>
+                    <li>خطوط <code style="color:#f5c542">&lt;&lt;&lt;</code>، <code style="color:#f5c542">===</code>، <code style="color:#f5c542">&gt;&gt;&gt;</code> رو پاک کن</li>
+                    <li>Commit و Push کن</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- قوانین طلایی -->
+        <div class="section">
+            <h2 class="section-title">⭐ قوانین طلایی</h2>
+
+            <div class="tip-box">
+                <strong>۱. قبل از شروع کار، همیشه Pull کن</strong>
+                <div class="code">git checkout main && git pull origin main</div>
+            </div>
+
+            <div class="tip-box">
+                <strong>۲. روی main مستقیم کار نکن — همیشه Branch بساز</strong>
+                <div class="code">git checkout -b feature-xyz</div>
+            </div>
+
+            <div class="tip-box">
+                <strong>۳. پیام‌های Commit واضح بنویس</strong>
+                <p style="margin-top:8px;">
+                    ❌ <code>update</code><br>
+                    ✅ <code>feat: add login validation</code><br>
+                    ✅ <code>fix: navbar dropdown bug</code>
+                </p>
+            </div>
+
+            <div class="tip-box">
+                <strong>۴. PR کوچیک بفرست، نه بزرگ</strong>
+                <p style="margin-top:8px;">PR ۱۰۰ خطی راحت بررسی می‌شه، ۱۰۰۰ خطی نه!</p>
+            </div>
+
+            <div class="tip-box">
+                <strong>۵. همیشه Branch خودت رو از main آپدیت نگه دار</strong>
+                <div class="code">git pull origin main</div>
+            </div>
+        </div>
+
+        <!-- نکته آخر -->
+        <div class="section" style="text-align:center;">
+            <h2 class="section-title" style="justify-content:center;">🎯 خلاصه یه خطی</h2>
+            <p style="font-size:18px; color:#f5c542; font-weight:bold; line-height:2;">
+                یه نفر مخزن رو می‌سازه → بقیه Clone می‌کنن →<br>
+                هر کس Branch خودش رو می‌سازه → Commit + Push →<br>
+                PR می‌فرسته → Lead Merge می‌کنه →<br>
+                همه Pull می‌کنن → برگرد به مرحله Branch
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>
